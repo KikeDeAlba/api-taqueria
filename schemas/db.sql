@@ -1,5 +1,6 @@
 -- Active: 1696997922748@@127.0.0.1@3306
 -- SQLBook: Code
+DROP TABLE IF EXISTS taqueria_db;
 CREATE DATABASE IF NOT EXISTS taqueria_db;
 USE taqueria_db;
 
