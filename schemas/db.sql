@@ -1,4 +1,4 @@
--- Active: 1696921476499@@127.0.0.1@3306
+-- Active: 1696997922748@@127.0.0.1@3306
 -- SQLBook: Code
 CREATE DATABASE IF NOT EXISTS taqueria_db;
 USE taqueria_db;
@@ -26,6 +26,11 @@ CREATE TABLE IF NOT EXISTS status_order (
     PRIMARY KEY(id)
 );
 
+CREATE TABLE IF NOT EXISTS tables(
+   id INT NOT NULL,
+   table_number INT NOT NULL
+);
+
 INSERT INTO status_order (name) VALUES
     ('pendiente'),
     ('cancelada'),
@@ -41,7 +46,8 @@ CREATE TABLE IF NOT EXISTS orders (
     table_number INT NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY (status_id) REFERENCES status_order(id),
-    FOREIGN KEY (type_id) REFERENCES type_order(id)
+    FOREIGN KEY (type_id) REFERENCES type_order(id),
+    FOREIGN KEY (table_number) REFERENCES tables(id)
 );
 
 CREATE TABLE IF NOT EXISTS order_products (
@@ -53,3 +59,6 @@ CREATE TABLE IF NOT EXISTS order_products (
     FOREIGN KEY (product_id) REFERENCES products(id),
     CHECK (quantity > 0)
 );
+
+
+
