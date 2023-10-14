@@ -32,7 +32,7 @@ def insert_product(product: Product):
             "price": product.price,
         }
     )
-    
+
     return {
         "message": "Product created"
     }
@@ -50,3 +50,18 @@ def update_product(id: int, product: Product):
     return {
         "message": "Product updated"
     }
+
+def delete_product(id: int):
+    taqueria_db.execute(
+        sql="DELETE FROM products WHERE id = %s;",
+        params=(id,)
+    )
+
+    return {
+        "message": "Product deleted"
+    }
+
+# Un contrato en la programacion, es el nombre de una funcion y lo que esta recibe
+# Por ejemplo, si una funcion se llama insert_product y recibe un producto, el contrato
+# seria insert_product(product: Product) y sabes que va a insertar un producto
+# solo por el mero hecho del nombre y los parametros de la funcion
