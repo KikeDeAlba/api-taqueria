@@ -1,7 +1,13 @@
 from services.db import taqueria_db
 from models.order import Order, OrderProduct
-
+from app.controllers.admin import get_config
+#
 def create_order(order: Order):
+    config_num_of_tables = int(get_config(name='number_of_tables'))
+
+    if order.table_number > config_num_of_tables:
+        raise Exception(f"Table number {order.table_number} not found")
+
     order_id = taqueria_db.insert(
         table="orders",
         data={
@@ -11,7 +17,7 @@ def create_order(order: Order):
             "adress" : order.adress
         }
     )
-
+        
     for product in order.products:
         taqueria_db.insert(
             table="order_products",
@@ -95,8 +101,8 @@ def delete_order(order_id:int):
 
 
 #TODO CHECK funciones para agregar o eliminar un producto 
-#TODO JESUS function para obtener ordenes 
-#TODO SHINO funcion para eliminar una orden 
+#TODO CHECK function para obtener ordenes 
+#TODO CHECK funcion para eliminar una orden 
 #
 # CREATE TABLE IF NOT EXISTS order_products (
 #     order_id INT NOT NULL,
