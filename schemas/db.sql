@@ -1,4 +1,4 @@
--- Active: 1697512546973@@127.0.0.1@3306@taqueria_db
+-- Active: 1696921476499@@127.0.0.1@3306@taqueria_db
 -- SQLBook: Code
 DROP TABLE IF EXISTS taqueria_db;
 CREATE DATABASE IF NOT EXISTS taqueria_db;
@@ -12,8 +12,10 @@ CREATE TABLE IF NOT EXISTS configs (
     UNIQUE KEY `name` (`name`)
 );
 
-INSERT INTO configs (name, value) VALUES
-    ('number_of_tables', '10');
+INSERT INTO configs (name, value)
+    VALUES ('number_of_tables', '10')
+    ON DUPLICATE KEY UPDATE value = '10';
+
 
 CREATE TABLE IF NOT EXISTS products(
     id INT NOT NULL AUTO_INCREMENT,

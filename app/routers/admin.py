@@ -4,3 +4,4 @@ router = APIRouter(prefix="/admin")
 
 router.get("/config")(get_config) # /admin/config
 router.post("/config/tables")(change_maximum_tables) # /admin/config/tables
+####
