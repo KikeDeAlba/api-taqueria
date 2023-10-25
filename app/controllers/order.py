@@ -1,23 +1,26 @@
+from fastapi import HTTPException
 from services.db import taqueria_db
 from models.order import Order, OrderProduct
 from app.controllers.admin import get_config
-#
+from enums.order import Status
+
+
 def create_order(order: Order):
     config_num_of_tables = int(get_config(name='number_of_tables'))
 
     if order.table_number > config_num_of_tables:
-        raise Exception(f"Table number {order.table_number} not found")
+        raise HTTPException(status_code=400, detail="Table number not found")
 
     order_id = taqueria_db.insert(
         table="orders",
         data={
             "client_name": order.client_name,
-            "type_id": order.type_id,
+            "type_id": order.type_id.value,
             "table_number" : order.table_number,
             "adress" : order.adress
         }
     )
-        
+
     for product in order.products:
         taqueria_db.insert(
             table="order_products",
@@ -89,15 +92,17 @@ def get_order(order_id:int):
 
 
 def delete_order(order_id:int):
-    taqueria_db.execute(
-        sql="DELETE FROM orders WHERE order_id = %s;",
-        params=(order_id,)
+    taqueria_db.update(
+        table="orders",
+        where=f"id = {order_id}",
+        data={
+            "status_id": Status.canceled.value
+        }
     )
+
     return {
         "message":"Delete Order Successfully"
     }
-
-
 
 
 #TODO CHECK funciones para agregar o eliminar un producto 

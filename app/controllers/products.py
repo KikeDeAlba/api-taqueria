@@ -1,5 +1,7 @@
+import code
 from services.db import taqueria_db
 from models.product import Product
+from fastapi import HTTPException
 
 
 # Esta funcion debe traer todos los productos de la base de datos y devolverlos
@@ -18,7 +20,7 @@ def get_one_product(id: int):
     )
 
     if not product:
-        raise Exception(f"Product with id {id} not found")
+        raise HTTPException(status_code=404, detail="Product not found")
 
     return product
 

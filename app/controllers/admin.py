@@ -1,5 +1,5 @@
 from services.db import taqueria_db
-
+from fastapi import HTTPException
 def change_maximum_tables(number_of_tables: int):
     taqueria_db.update(
         table="configs",
@@ -20,6 +20,6 @@ def get_config(name: str):
     )
 
     if not config:
-        raise Exception("No se encontró la configuración")
+        raise HTTPException(status_code=404, detail="Config not found")
 
     return config['value']

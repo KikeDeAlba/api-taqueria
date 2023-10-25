@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from enums.order import TypeOrder
 
 class OrderProduct (BaseModel):
     product_id: int
@@ -8,7 +9,7 @@ class Order (BaseModel):
     client_name: str
     table_number: int
     adress: str | None = None
-    type_id: int
+    type_id: TypeOrder
     products: list[OrderProduct]
 
 # CREATE TABLE IF NOT EXISTS orders (
